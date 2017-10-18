@@ -31,9 +31,7 @@ namespace TestFramework
                 try
                 {
                     Console.WriteLine("Running " + testExpression.ToString());
-                    // This one works
                     var result = context.TestTable.AsExpandable().Where(t => testExpression.Invoke(t)).ToList();
-
                 }
                 catch (Exception exc)
                 {
@@ -53,6 +51,7 @@ namespace TestFramework
             return 0;
         }
 
+        // Fix found on https://stackoverflow.com/questions/18976495/linq-to-entities-only-supports-casting-edm-primitive-or-enumeration-types-with-i
         static Expression<Func<T, bool>> GetIsActiveExpression<T>() where T : class, TestFramework.Interfaces.IIsActive
         {
             return t => t.IsActive;
